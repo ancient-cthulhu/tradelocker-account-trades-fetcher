@@ -2,6 +2,8 @@
 
 This Streamlit application fetches account data from TradeLocker using their REST API. It fetches orders history and available instruments per account using JWT authentication.
 
+[App hosted through Streamlit](tradelocker-atf.streamlit.app/)
+
 ## Features
 
 - **Authentication**: Authenticate using email, password, and server URL.
