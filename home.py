@@ -128,7 +128,6 @@ def main():
             credentials_df = pd.read_csv(uploaded_file)
             if set(['email', 'password', 'server']).issubset(credentials_df.columns):
                 st.success("CSV file uploaded successfully")
-                process_credentials(credentials_df)
             else:
                 st.error("CSV must contain 'email', 'password', and 'server' columns")
                 return
@@ -149,93 +148,93 @@ def main():
                 st.error("Please provide all required credentials.")
                 return
             credentials_df = pd.DataFrame([{'email': email, 'password': password, 'server': server}])
+
+    if credentials_df is None:
+        st.info("Please enter credentials or upload a CSV file.")
+        return
+
+    api_url_base = 'https://demo.tradelocker.com/backend-api/trade/accounts'
+    api_url_accounts = 'https://demo.tradelocker.com/backend-api/auth/jwt/all-accounts'
     
-            if credentials_df is None:
-                st.info("Please enter credentials or upload a CSV file.")
-                return
+    st.markdown("### Live Results")
+    st.code("Fetching data... Please wait.")
+    result_data = []
+    data_store = {}
+
+    for index, row in credentials_df.iterrows():
+        email = row['email']
+        password = row['password']
+        server = row['server']
+
+        # Authenticate and get tokens
+        access_token, _ = authenticate(email, password, server)
+        if not access_token:
+            st.error(f"Authentication failed for user {email}. Skipping to next user.")
+            continue
+
+        # Fetch all account numbers
+        account_numbers = fetch_all_account_numbers(api_url_accounts, access_token)
+        if not account_numbers:
+            st.error(f"Failed to fetch account numbers for user {email}. Skipping to next user.")
+            continue
+
+        user_results = {
+            'email': email,
+            'account_numbers': []
+        }
+
+        for account in account_numbers:
+            acc_num = account.get('accNum')
+            acc_id = account.get('id')
+
+            # Fetch orders history for the account
+            api_url_orders_history_base = f'{api_url_base}/{acc_id}/ordersHistory'
+            orders_history = fetch_orders_history(api_url_orders_history_base, access_token, acc_num)
+            if orders_history:
+                filename = f'orders_history_{acc_id}.json'
+                store_download_data(data_store, orders_history, filename)
+                st.success(f"🐕 Fetched orders history for account {acc_id} of user {email}")
+                user_results['account_numbers'].append({
+                    'acc_id': acc_id,
+                    'orders_history': orders_history
+                })
+
+            # Fetch instruments available for trading
+            api_url_instruments_base = f'{api_url_base}/{acc_id}/instruments'
+            account_instruments = fetch_account_instruments(api_url_instruments_base, access_token, acc_num)
+            if account_instruments:
+                filename = f'instruments_{acc_id}.json'
+                store_download_data(data_store, account_instruments, filename)
+                st.success(f"🐕 Fetched instruments for account {acc_id} of user {email}")
+                user_results['account_numbers'].append({
+                    'acc_id': acc_id,
+                    'instruments': account_instruments
+                })
+
+        result_data.append(user_results)
+
     
-            api_url_base = 'https://demo.tradelocker.com/backend-api/trade/accounts'
-            api_url_accounts = 'https://demo.tradelocker.com/backend-api/auth/jwt/all-accounts'
-            
-            st.markdown("### Live Results")
-            st.code("Fetching data... Please wait.")
-            result_data = []
-            data_store = {}
+   
+    zip_data = create_zip_archive(data_store)
 
-            for index, row in credentials_df.iterrows():
-                email = row['email']
-                password = row['password']
-                server = row['server']
+    
+    st.markdown("### Download All Files")
+    st.download_button(
+        label="🗂️ Download All Files as ZIP",
+        data=zip_data,
+        file_name='TradeLocker_data.zip',
+        mime='application/zip'
+    )
 
-                # Authenticate and get tokens
-                access_token, _ = authenticate(email, password, server)
-                if not access_token:
-                    st.error(f"Authentication failed for user {email}. Skipping to next user.")
-                    continue
-
-                # Fetch all account numbers
-                account_numbers = fetch_all_account_numbers(api_url_accounts, access_token)
-                if not account_numbers:
-                    st.error(f"Failed to fetch account numbers for user {email}. Skipping to next user.")
-                    continue
-
-                user_results = {
-                    'email': email,
-                    'account_numbers': []
-                }
-
-                for account in account_numbers:
-                    acc_num = account.get('accNum')
-                    acc_id = account.get('id')
-
-                    # Fetch orders history for the account
-                    api_url_orders_history_base = f'{api_url_base}/{acc_id}/ordersHistory'
-                    orders_history = fetch_orders_history(api_url_orders_history_base, access_token, acc_num)
-                    if orders_history:
-                        filename = f'orders_history_{acc_id}.json'
-                        store_download_data(data_store, orders_history, filename)
-                        st.success(f"🐕 Fetched orders history for account {acc_id} of user {email}")
-                        user_results['account_numbers'].append({
-                            'acc_id': acc_id,
-                            'orders_history': orders_history
-                        })
-
-                    # Fetch instruments available for trading
-                    api_url_instruments_base = f'{api_url_base}/{acc_id}/instruments'
-                    account_instruments = fetch_account_instruments(api_url_instruments_base, access_token, acc_num)
-                    if account_instruments:
-                        filename = f'instruments_{acc_id}.json'
-                        store_download_data(data_store, account_instruments, filename)
-                        st.success(f"🐕 Fetched instruments for account {acc_id} of user {email}")
-                        user_results['account_numbers'].append({
-                            'acc_id': acc_id,
-                            'instruments': account_instruments
-                        })
-
-                result_data.append(user_results)
-
-            
-           
-            zip_data = create_zip_archive(data_store)
-
-           
-            st.markdown("### Download All Files")
-            st.download_button(
-                label="🗂️ Download All Files as ZIP",
-                data=zip_data,
-                file_name='TradeLocker_data.zip',
-                mime='application/zip'
-            )
-
-            
-            st.markdown("### File Contents")
-            for filename, filedata in data_store.items():
-                with st.expander(f"Contents of {filename}"):
-                    st.code(filedata.getvalue().decode())
+    
+    st.markdown("### File Contents")
+    for filename, filedata in data_store.items():
+        with st.expander(f"Contents of {filename}"):
+            st.code(filedata.getvalue().decode())
 
 if __name__ == "__main__":
     main()
-        
+    
     st.markdown(
         """
         <style>
