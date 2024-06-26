@@ -156,7 +156,7 @@ def main():
     api_url_base = 'https://demo.tradelocker.com/backend-api/trade/accounts'
     api_url_accounts = 'https://demo.tradelocker.com/backend-api/auth/jwt/all-accounts'
     
-    st.markdown("### Live Results")
+    st.markdown("### Results")
     st.code("Fetching data... Please wait.")
     result_data = []
     data_store = {}
@@ -218,7 +218,6 @@ def main():
     zip_data = create_zip_archive(data_store)
 
     
-    st.markdown("### Download All Files")
     st.download_button(
         label="🗂️ Download All Files as ZIP",
         data=zip_data,
