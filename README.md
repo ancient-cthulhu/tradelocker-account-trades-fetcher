@@ -20,7 +20,7 @@ This Streamlit application fetches account data from TradeLocker using their RES
 
     -   The fetched data is temporarily stored in-memory in a dictionary (`data_store`).
     -   Data is formatted as JSON and prepared for download in a ZIP archive.
-    -   The ZIP file is created and provided to the user as a downloadable link.
+    -   The ZIP file is created and provided to the user.
  
 -   **Security:**
   
