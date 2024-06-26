@@ -15,10 +15,10 @@ def main():
     st.markdown("### Overview of TradeLocker Account :grey[Trades Fetcher]")
 
     st.markdown("""
-        The TradeLocker Account :grey[Trades Fetcher] script allows users to securely retrieve data from TradeLocker, including account numbers, order history, and trading instruments. 
+        The TradeLocker Account :grey[Trades Fetcher] script allows users to securely retrieve their trade data from TradeLocker. This means fetching account numbers, then order history, and trading instruments. 
         
         **It operates in the following steps:**
-        1. **Authentication**: Uses provided email, password, and server to obtain a JWT token for API access.
+        1. **Authentication**: Use provided email, password, and server to obtain a JWT token for API access.
         2. **Data Fetching**: Utilizes the JWT token to fetch account numbers, orders history, and trading instruments.
         3. **Data Presentation**: Displays fetched data and enables downloading of JSON files for further analysis.
     """)
@@ -26,10 +26,10 @@ def main():
     st.markdown("## Security")
  
     st.markdown("""
-        TradeLocker Account :grey[Trades Fetcher] utilizes these security measures to protect user data:
+        TradeLocker Account :grey[Trades Fetcher] employs these security measures to protect user data:
         - **HTTPS**: All data transmissions are encrypted using HTTPS, ensuring secure communication between TradeLocker and the user's browser.
         - **Client-Side Processing**: Data processing occurs entirely within the user's browser, minimizing exposure of sensitive information.
-        - **No Server Storage**: No data is stored on the server, enhancing privacy and security.
+        - **No Server Storage**: No data is stored at all, enhancing privacy and security.
     """)
 
     st.markdown("## Functions Overview")
