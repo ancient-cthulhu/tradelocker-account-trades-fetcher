@@ -1,6 +1,6 @@
 # TradeLocker Account Trades Fetcher
 
-This Streamlit application fetches account data from TradeLocker using their APIs. It fetches orders history and available instruments per account using JWT authentication.
+This Streamlit application fetches account data from TradeLocker using their REST API. It fetches orders history and available instruments per account using JWT authentication.
 
 ## Features
 
