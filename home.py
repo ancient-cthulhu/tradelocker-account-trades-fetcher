@@ -128,6 +128,7 @@ def main():
             credentials_df = pd.read_csv(uploaded_file)
             if set(['email', 'password', 'server']).issubset(credentials_df.columns):
                 st.success("CSV file uploaded successfully")
+                process_credentials(credentials_df)
             else:
                 st.error("CSV must contain 'email', 'password', and 'server' columns")
                 return
