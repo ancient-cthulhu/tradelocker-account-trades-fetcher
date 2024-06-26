@@ -55,9 +55,9 @@ This Streamlit application fetches account data from TradeLocker using their RES
 
    - Choose an input method: either upload a CSV file with credentials or enter them manually.
 
-   - Click "Fetch Data" to initiate data retrieval for each account.
+   - Click "Submit" to initiate data retrieval for each account.
 
-   - Results will be displayed live with download links for fetched data.
+   - Results will be displayed live with an option to download a .zip file containing the fetched data.
 
 ## Example CSV Format
 
