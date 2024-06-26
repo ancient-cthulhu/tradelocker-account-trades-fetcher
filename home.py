@@ -111,7 +111,7 @@ def main():
     
     if input_method == "Upload CSV with credentials":
         st.markdown("""
-            #### CSV Format with Credentials
+            #### CSV Format for Credentials
             Upload a CSV file with columns: `email`, `password`, `server`.
             
             Example:
