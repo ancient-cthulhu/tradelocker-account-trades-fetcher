@@ -12,6 +12,13 @@ This Streamlit application fetches account data from TradeLocker using their RES
 
 - **Live Results**: Displays fetched data and provides download links for JSON files.
 
+## Security Details
+
+- **HTTPS Encryption**: All data transmissions between the application and TradeLocker's API are encrypted using HTTPS, ensuring secure communication.
+  
+- **Client-Side Processing**: Data processing occurs entirely within the user's browser, minimizing exposure of sensitive information to the server.
+
+
 ## How to Use
 
 1\. **Installation**
@@ -19,11 +26,11 @@ This Streamlit application fetches account data from TradeLocker using their RES
    Clone the repository and navigate into the directory:
 
    ``
-   git clone https://github.com/yourusername/tradelocker-data-fetcher.git
+   git clone https://github.com/ancient-cthulhu/tradelocker-account-trades-fetcher.git
    ``
    
    ``
-   cd tradelocker-data-fetcher
+   cd tradelocker-account-trades-fetcher
    ``
 
 2\. **Setup**
@@ -39,7 +46,7 @@ This Streamlit application fetches account data from TradeLocker using their RES
    Start the Streamlit app:
 
    ```
-   streamlit run app.py
+   streamlit run home.py
    ```
 
 4\. **Using the App**
