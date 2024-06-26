@@ -10,8 +10,8 @@ This Streamlit application fetches account data from TradeLocker using their RES
  
 - **CSV Upload**: Option to upload credentials via a CSV file.
 
-- **Live Results**: Displays fetched data and provides download links for JSON files.
-
+- **Live Results**: Displays fetched data and provides a .zip file containing the .json files. 
+ 
 ## Security Details
 
 - **HTTPS Encryption**: All data transmissions between the application and TradeLocker's API are encrypted using HTTPS, ensuring secure communication.
