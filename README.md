@@ -1,6 +1,6 @@
 # TradeLocker Account Trades Fetcher
 
-This Streamlit application demonstrates fetching account data from TradeLocker using their APIs. It allows fetching orders history and available instruments for trading using JWT authentication.
+This Streamlit application fetches account data from TradeLocker using their APIs. It fetches orders history and available instruments per account using JWT authentication.
 
 ## Features
 
@@ -18,16 +18,19 @@ This Streamlit application demonstrates fetching account data from TradeLocker u
 
    Clone the repository and navigate into the directory:
 
-   ```bash
+   ``
    git clone https://github.com/yourusername/tradelocker-data-fetcher.git
+   ``
+   
+   ``
    cd tradelocker-data-fetcher
-   ```
+   ``
 
 2\. **Setup**
 
    Install the required Python packages:
 
-   ```bash
+   ```
    pip install -r requirements.txt
    ```
 
@@ -35,7 +38,7 @@ This Streamlit application demonstrates fetching account data from TradeLocker u
 
    Start the Streamlit app:
 
-   ```bash
+   ```
    streamlit run app.py
    ```
 
@@ -67,6 +70,6 @@ This Streamlit page is not affiliated with TradeLocker. TradeLocker is a registe
 
 ### Author
 
-Made with ❤️ by [Your Name](https://github.com/ancient-cthulhu)
+Made with ☕ by [ancient-cthulhu](https://github.com/ancient-cthulhu)
 
 ---
