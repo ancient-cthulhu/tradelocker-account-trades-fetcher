@@ -16,10 +16,17 @@ This Streamlit application fetches account data from TradeLocker using their RES
  
 ## Security Details
 
-- **HTTPS Encryption**: All data transmissions between the application and TradeLocker's API are encrypted using HTTPS, ensuring secure communication.
-  
-- **Client-Side Processing**: Data processing occurs entirely within the user's browser, minimizing exposure of sensitive information to the server.
+- **Temporary Storage and Download:**
 
+    -   The fetched data is temporarily stored in-memory in a dictionary (`data_store`).
+    -   Data is formatted as JSON and prepared for download in a ZIP archive.
+    -   The ZIP file is created and provided to the user as a downloadable link.
+ 
+-   **Security:**
+  
+    -   The script ensures that no credentials are saved or stored on the server.
+    -   All sensitive operations involving credentials are performed securely over HTTPS.
+    -   Only the necessary access tokens are kept temporarily in memory for the duration of the session.
 
 ## How to Use
 
